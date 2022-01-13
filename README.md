@@ -1,6 +1,6 @@
 # yaml translator
 
-This project aims to run a script to translate YAML files using DeepL.
+This project aims to run a script to translate YAML files using [DeepL](https://www.deepl.com/en/quality.html).
 
 <br>
 
