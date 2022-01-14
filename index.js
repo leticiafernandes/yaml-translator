@@ -13,7 +13,7 @@ const axios = require("axios");
 
 const promises = [];
 
-const isElegibleToTranslation = (value) => typeof value === "string";
+const isEligibleToTranslation = (value) => typeof value === "string";
 
 const shouldBeDestructured = (value) => typeof value === "object";
 
@@ -40,7 +40,7 @@ const translate = (obj) => {
   for (const [key, value] of Object.entries(obj)) {
     if (!value) continue;
 
-    else if (isElegibleToTranslation(value)) {
+    else if (isEligibleToTranslation(value)) {
       promises.push(applyTranslationForText(obj, key, value));
     } 
     
