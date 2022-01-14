@@ -9,7 +9,6 @@ const argv = yargs(hideBin(process.argv)).argv;
 // exec();
 const yaml = require("js-yaml");
 const fs = require("fs");
-const path = require("path");
 const axios = require("axios");
 
 const promises = [];
