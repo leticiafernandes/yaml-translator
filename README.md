@@ -42,3 +42,9 @@ This project aims to run a script to translate YAML files using [DeepL](https://
 
 - The expected result can be found at `tmp/final.yml`.
 
+<br>
+
+## Usage example
+
+[![Watch the video](https://i.imgur.com/StY7aHU.png)](https://youtu.be/dWrn_Od2J5I)
+
