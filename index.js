@@ -18,9 +18,19 @@ const isEligibleToTranslation = (value) => typeof value === "string";
 const shouldBeDestructured = (value) => typeof value === "object";
 
 const applyTranslationForText = (obj, key, text) => {
+  const variableRegex = /\{(.*?)\}/g;
+  const savedVariables =  text.match(variableRegex) || [];
+  const tempPattern = "{%}";
+  const textToTranslate = text.replace(variableRegex, tempPattern);
   const sourceLang = argv.from; // FROM which language we want to translate
   const targetLang = argv.to; // TO which language we want to translate
-  const params = `auth_key=${process.env.AUTH_KEY}&text=${text}&target_lang=${targetLang}&source_lang=${sourceLang}`;
+  const params = `auth_key=${process.env.AUTH_KEY}&text=${textToTranslate}&target_lang=${targetLang}&source_lang=${sourceLang}`;
+
+  const createTranslationWithVariables = (trans) => {
+    return savedVariables.reduce((acc, variable) => {
+      return acc.replace(tempPattern, variable)
+    }, trans);
+  }
 
   return axios
     .post(`${process.env.HOST}?${params}`)
@@ -29,7 +39,9 @@ const applyTranslationForText = (obj, key, text) => {
         data: { translations = [] },
       } = response;
 
-      obj[key] = translations[0].text || "";
+      obj[key] = savedVariables.length
+        ? createTranslationWithVariables(translations[0].text)
+        : translations[0].text || "";
     })
     .catch(function (error) {
       console.log(error.message);
@@ -42,8 +54,8 @@ const translate = (obj) => {
 
     else if (isEligibleToTranslation(value)) {
       promises.push(applyTranslationForText(obj, key, value));
-    } 
-    
+    }
+
     else if (shouldBeDestructured(value)) {
       translate(value);
     }
