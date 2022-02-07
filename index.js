@@ -34,10 +34,15 @@ const applyTranslationForText = (obj, key, text) => {
   const sourceLang = argv.from; // FROM which language we want to translate
   const targetLang = argv.to; // TO which language we want to translate
   const textToTranslate = removeVariablePlaceHolders(text);
-  const params = `auth_key=${process.env.AUTH_KEY}&text=${textToTranslate}&target_lang=${targetLang}&source_lang=${sourceLang}`;
+  const urlParams = new URLSearchParams({
+    auth_key: process.env.AUTH_KEY,
+    text: textToTranslate,
+    target_lang: targetLang,
+    source_lang: sourceLang,
+  });
 
   return axios
-    .post(`${process.env.HOST}?${params}`)
+    .post(`${process.env.HOST}?${urlParams}`)
     .then(function (response) {
       const {
         data: { translations = [] },
