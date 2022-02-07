@@ -6,7 +6,7 @@ This project aims to run a script to translate YAML files using [DeepL](https://
 
 ## System requirements
 
-`node=~v17.0.1`
+`node=v16.13.2` [(LTS)](https://nodejs.org/en/about/releases/)
 
 <br>
 
@@ -28,17 +28,17 @@ This project aims to run a script to translate YAML files using [DeepL](https://
 
 - Open the project and upload the `YAML` file you want to translate at the `translations` folder with the name `language.yaml`
 
-- After the previous steps are configured you just need to run the script:
+- After the previous steps are configured you just need to run the script, the supported languages list are [available through DeepL API](https://www.deepl.com/docs-api/other-functions/listing-supported-languages/):
 
     ```
     $ node index.js --from=de --to=en
     ```
 
-    `(*)` The `--from` and `--to` values are mandatory
+    - The `--from` and `--to` values are mandatory
 
-    `(*)` The `--from` informs from which language you're coming from
+    - The `--from` informs from which language you're coming from
 
-    `(*)` The `--to` informs from which language you're translating to
+    - The `--to` informs from which language you're translating to
 
 - The expected result can be found at `tmp/final.yml`.
 
