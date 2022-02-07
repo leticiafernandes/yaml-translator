@@ -24,9 +24,9 @@ const isEligibleToTranslation = (value) => typeof value === "string";
 
 const shouldBeDestructured = (value) => typeof value === "object";
 
-const transformTranslatedText = (text, placeholders) => {
+const transformTranslatedText = (placeholders, text) => {
   return placeholders.length
-    ? includeVariablePlaceHolders(text, placeholders)
+    ? includeVariablePlaceHolders(placeholders, text)
     : text;
 };
 
@@ -45,10 +45,10 @@ const applyTranslationForText = (obj, key, text) => {
 
       const textPlaceholders = getVariablePlaceholders(text);
 
-      obj[key] = transformTranslatedText(translations[0].text, textPlaceholders) || "";
+      obj[key] = transformTranslatedText(textPlaceholders, translations[0].text) || "";
     })
     .catch(function (error) {
-      console.log(error.message);
+      console.log("[ERROR]", error.message);
     });
 };
 
