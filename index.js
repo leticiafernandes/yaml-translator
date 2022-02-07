@@ -11,26 +11,30 @@ const yaml = require("js-yaml");
 const fs = require("fs");
 const axios = require("axios");
 
+// variables placeholder
+const {
+  getVariablePlaceholders,
+  includeVariablePlaceHolders,
+  removeVariablePlaceHolders,
+} = require("./src/handleVariablePlaceholder");
+
 const promises = [];
 
 const isEligibleToTranslation = (value) => typeof value === "string";
 
 const shouldBeDestructured = (value) => typeof value === "object";
 
+const transformTranslatedText = (text, placeholders) => {
+  return placeholders.length
+    ? includeVariablePlaceHolders(text, placeholders)
+    : text;
+};
+
 const applyTranslationForText = (obj, key, text) => {
-  const variableRegex = /\{(.*?)\}/g;
-  const savedVariables =  text.match(variableRegex) || [];
-  const tempPattern = "{%}";
-  const textToTranslate = text.replace(variableRegex, tempPattern);
   const sourceLang = argv.from; // FROM which language we want to translate
   const targetLang = argv.to; // TO which language we want to translate
+  const textToTranslate = removeVariablePlaceHolders(text);
   const params = `auth_key=${process.env.AUTH_KEY}&text=${textToTranslate}&target_lang=${targetLang}&source_lang=${sourceLang}`;
-
-  const createTranslationWithVariables = (trans) => {
-    return savedVariables.reduce((acc, variable) => {
-      return acc.replace(tempPattern, variable)
-    }, trans);
-  }
 
   return axios
     .post(`${process.env.HOST}?${params}`)
@@ -39,9 +43,9 @@ const applyTranslationForText = (obj, key, text) => {
         data: { translations = [] },
       } = response;
 
-      obj[key] = savedVariables.length
-        ? createTranslationWithVariables(translations[0].text)
-        : translations[0].text || "";
+      const textPlaceholders = getVariablePlaceholders(text);
+
+      obj[key] = transformTranslatedText(translations[0].text, textPlaceholders) || "";
     })
     .catch(function (error) {
       console.log(error.message);
