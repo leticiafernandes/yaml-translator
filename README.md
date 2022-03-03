@@ -6,7 +6,7 @@ This project aims to run a script to translate YAML files using [DeepL](https://
 
 ## System requirements
 
-`node=v16.13.2` [(LTS)](https://nodejs.org/en/about/releases/)
+`node=^v16.13.2` [(LTS)](https://nodejs.org/en/about/releases/)
 
 <br>
 
@@ -47,4 +47,3 @@ This project aims to run a script to translate YAML files using [DeepL](https://
 ## Usage example
 
 [![Watch the video](https://i.imgur.com/StY7aHU.png)](https://youtu.be/dWrn_Od2J5I)
-
