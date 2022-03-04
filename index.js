@@ -18,7 +18,7 @@ const {
   removeVariablePlaceHolders,
 } = require("./src/handleVariablePlaceholder");
 
-const writeErrorFile = require("./src/ultils/writeErrorFile");
+const writeErrorFile = require("./src/writeErrorFile");
 
 const promises = [];
 const translationErrors = [];
