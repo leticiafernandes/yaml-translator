@@ -1,7 +1,7 @@
 const {
   VARIABLE_PLACEHOLDER_REGEX,
   TEMPORARY_VARIABLE_PLACEHOLDER,
-} = require("./ultils/constants");
+} = require("./constants");
 
 const getVariablePlaceholders = (text) =>
   text.match(VARIABLE_PLACEHOLDER_REGEX) || [];

@@ -18,7 +18,10 @@ const {
   removeVariablePlaceHolders,
 } = require("./src/handleVariablePlaceholder");
 
+const writeErrorFile = require("./src/writeErrorFile");
+
 const promises = [];
+const translationErrors = [];
 
 const isEligibleToTranslation = (value) => typeof value === "string";
 
@@ -53,6 +56,7 @@ const applyTranslationForText = (obj, key, text) => {
       obj[key] = transformTranslatedText(textPlaceholders, translations[0].text) || "";
     })
     .catch(function (error) {
+      translationErrors.push(key);
       console.log("[ERROR]", error.message);
     });
 };
@@ -106,6 +110,7 @@ const exec = () => {
           "Translations requested... \nWill write the translated file... \n"
         );
         writeYamlFile("./tmp/final.yml", data);
+        writeErrorFile(translationErrors);
       })
       .catch((err) => console.log(err));
   } catch (e) {
